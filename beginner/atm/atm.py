@@ -40,7 +40,7 @@ class Account:
 # Interactor
 class ABCBank(Account):
 
-    bank_charges: int = 0.5
+    bank_charges: float = 0.5
 
     def __init__(
         self,
