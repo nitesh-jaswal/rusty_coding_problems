@@ -38,7 +38,7 @@ class Account:
             raise ValueError("ERROR: Negative value not allowed!")
 
 # Interactor
-class ABCBank(Account):
+class ABCBankAccount(Account):
 
     bank_charges: float = 0.5
 
@@ -46,21 +46,26 @@ class ABCBank(Account):
         self,
         balance: float = 0.0):
 
-        ABCBank.raise_if_greater_than_2000(balance=balance)
+        ABCBankAccount.raise_if_greater_than_2000(balance=balance)
         super().__init__(balance)
 
     def withdraw(self, amount: int):
 
-        ABCBank.raise_if_greater_than_2000(amount=amount)
+        ABCBankAccount.raise_if_greater_than_2000(amount=amount)
 
         if abs(amount)%5 != 0:
             raise ValueError("ERROR: Transaction amount must be a multiple of 5 only")
-        if (ABCBank.bank_charges + abs(amount)) > self._balance:
+        if (ABCBankAccount.bank_charges + abs(amount)) > self._balance:
             raise ValueError("ERROR: Insufficient account balance")
 
         super().withdraw(amount)
-        super().withdraw(ABCBank.bank_charges)
+        super().withdraw(ABCBankAccount.bank_charges)
     
+    def deposit(self, amount: int):
+        balance = self._balance + amount
+        ABCBankAccount.raise_if_greater_than_2000(balance)
+        self._balance = balance
+
     @classmethod
     def set_bank_charges(cls, new_charges):
         cls.bank_charges = new_charges
@@ -91,7 +96,7 @@ class ATM:
 def main():
     try:
         balance: float = ATM.input_balance()
-        pooja_account = ABCBank(balance)
+        pooja_account = ABCBankAccount(balance)
     except Exception as e:
         print(e)
         exit(0)
