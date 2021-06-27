@@ -44,7 +44,7 @@ class ABCBank(Account):
 
     def __init__(
         self,
-        balance: float):
+        balance: float = 0.0):
 
         ABCBank.raise_if_greater_than_2000(balance=balance)
         super().__init__(balance)
@@ -74,6 +74,7 @@ class ABCBank(Account):
 
 # Boundary
 class ATM:
+
     @staticmethod
     def input_balance() -> float:
         return float(input("Enter Current Balance: "))
